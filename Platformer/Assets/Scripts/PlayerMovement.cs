@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody2D rb;
     public float speed;
+    public float speedCap;
     public float jumpForce;
 
     bool isGrounded;
@@ -33,13 +34,26 @@ public class PlayerMovement : MonoBehaviour
         Jump();
         CheckIfGrounded();
         MarioJump();
+        SpeedCap();
     }
 
     void Move()
     {
-        float x = Input.GetAxisRaw("Horizontal");
+        /*float x = Input.GetAxisRaw("Horizontal");
         float moveBy = x * speed;
-        rb.velocity = new Vector2(moveBy, rb.velocity.y);
+        rb.velocity = new Vector2(moveBy, rb.velocity.y);*/
+
+         
+
+        if (Input.GetKey(KeyCode.D)) 
+        {
+            rb.velocity += Vector2.right * speed * Time.deltaTime;
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            rb.velocity += Vector2.left * speed * Time.deltaTime;
+        }
     }
 
     void Jump()
@@ -72,11 +86,19 @@ public class PlayerMovement : MonoBehaviour
     {
         if (rb.velocity.y < 0)
         {
-            rb.velocity += Vector2.up * Physics2D.gravity * (fallMultiplier - 1) * Time.deltaTime;
+            rb.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
         else if (rb.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
         {
-            rb.velocity += Vector2.up * Physics2D.gravity * (lowJumpMultiplier - 1) * Time.deltaTime;
+            rb.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
+    }
+
+    void SpeedCap() 
+    {
+        float cappedXvelocity = Mathf.Min(Mathf.Abs(rb.velocity.x), speedCap) * Mathf.Sign(rb.velocity.x);
+        float cappedYvelocity = rb.velocity.y;
+
+        rb.velocity =new Vector2(cappedXvelocity, cappedYvelocity);
     }
 }
