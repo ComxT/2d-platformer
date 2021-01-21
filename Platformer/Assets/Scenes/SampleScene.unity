@@ -133,8 +133,8 @@ GameObject:
   - component: {fileID: 246427181}
   - component: {fileID: 246427183}
   - component: {fileID: 246427185}
-  - component: {fileID: 246427184}
   - component: {fileID: 246427186}
+  - component: {fileID: 246427184}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -222,7 +222,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba8fdb1444f95a0478a64b1aee201214, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 7
+  speedCap: 10
   jumpForce: 7.5
   isGroundedCheck: {fileID: 2004638269}
   checkGroundRadius: 0.05
@@ -232,8 +233,8 @@ MonoBehaviour:
   fallMultiplier: 2.5
   lowJumpMultiplier: 2
   rememberGroundedFor: 0.1
---- !u!68 &246427184
-EdgeCollider2D:
+--- !u!61 &246427184
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -245,15 +246,19 @@ EdgeCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0058023036, y: -0.0870533}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.6, y: 1.6}
+    newSize: {x: 1.6, y: 1.6}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.9385399, y: 1.4258934}
   m_EdgeRadius: 0
-  m_Points:
-  - {x: -0.10038483, y: 0.5988232}
-  - {x: -0.70014054, y: -0.29051813}
-  - {x: -0.34653842, y: -0.7893145}
-  - {x: 0.29893804, y: -0.7891782}
-  - {x: 0.70601845, y: -0.290843}
-  - {x: 0.10334915, y: 0.5988232}
 --- !u!50 &246427185
 Rigidbody2D:
   serializedVersion: 4
