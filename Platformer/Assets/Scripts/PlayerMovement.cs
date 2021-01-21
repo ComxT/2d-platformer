@@ -42,12 +42,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D)) 
         {
-            rb.velocity += Vector2.right * speed * Time.deltaTime;
+            rb.velocity += 3.5f * Vector2.right * speed * Time.deltaTime;
         }
 
         if (Input.GetKey(KeyCode.A))
         {
-            rb.velocity += Vector2.left * speed * Time.deltaTime;
+            rb.velocity += 3.5f * Vector2.left * speed * Time.deltaTime;
         }
     }
 
