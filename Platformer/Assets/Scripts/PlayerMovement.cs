@@ -22,8 +22,11 @@ public class PlayerMovement : MonoBehaviour
     public float rememberGroundedFor;
     float lastTimeGrounded;
 
+    private Animator anim;
+
     void Start()
     {
+        anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -35,12 +38,23 @@ public class PlayerMovement : MonoBehaviour
         CheckIfGrounded();
         MarioJump();
         SpeedCap();
+        SpriteMirror();
     }
 
     void Move()
-    {  
+    {
 
-        if (Input.GetKey(KeyCode.D)) 
+        if (rb.velocity.x != 0)
+        {
+            anim.SetBool("isRunning", true);
+
+        }
+        else
+        {
+            anim.SetBool("isRunning", false);
+        }
+
+        if (Input.GetKey(KeyCode.D))
         {
             rb.velocity += 3.5f * Vector2.right * speed * Time.deltaTime;
         }
@@ -48,15 +62,32 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             rb.velocity += 3.5f * Vector2.left * speed * Time.deltaTime;
+
         }
+
     }
 
     void Jump()
     {
+
+        if (rb.velocity.y != 0)
+        {
+            anim.SetBool("isJumping", true);
+        }
+        else
+        {
+            anim.SetBool("isJumping", false);
+        }
+
+
         if (Input.GetKeyDown(KeyCode.Space) && (isGrounded || Time.time - lastTimeGrounded <= rememberGroundedFor)) 
             {
+
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            }
+
+                anim.SetTrigger("takeOff");
+ 
+        }
     }
 
     void CheckIfGrounded() 
@@ -95,5 +126,20 @@ public class PlayerMovement : MonoBehaviour
         float cappedYvelocity = rb.velocity.y;
 
         rb.velocity =new Vector2(cappedXvelocity, cappedYvelocity);
+    }
+
+    void SpriteMirror() 
+    {
+        Vector3 characterScale = transform.localScale;
+
+        if(Input.GetAxis("Horizontal") < 0)
+        {
+            characterScale.x = -1;
+        }
+        if(Input.GetAxis("Horizontal") > 0)
+        {
+            characterScale.x = 1;
+        }
+        transform.localScale = characterScale;
     }
 }
